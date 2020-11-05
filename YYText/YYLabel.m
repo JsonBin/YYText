@@ -403,6 +403,18 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
     self.isAccessibilityElement = YES;
 }
 
+#pragma mark - DarkMode
+#ifdef __IPHONE_13_0
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection{
+    [super traitCollectionDidChange:previousTraitCollection];
+    if (@available(iOS 13.0, *)) {
+        if([UITraitCollection.currentTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]){
+            [self _setLayoutNeedRedraw];
+        }
+    }
+}
+#endif
+
 #pragma mark - Override
 
 - (instancetype)initWithFrame:(CGRect)frame {
