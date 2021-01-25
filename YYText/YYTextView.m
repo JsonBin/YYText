@@ -2032,7 +2032,9 @@ typedef NS_ENUM(NSUInteger, YYTextMoveDirection) {
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection{
     [super traitCollectionDidChange:previousTraitCollection];
     if (@available(iOS 13.0, *)) {
-        if([UITraitCollection.currentTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]){
+        BOOL different = [self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection];
+        BOOL notSame = self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle;
+        if (different || notSame) {
             [self _commitUpdate];
         }
     }
